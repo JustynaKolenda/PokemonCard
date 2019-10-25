@@ -1,0 +1,11 @@
+.pokemonCard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+
+    &--cardImg{
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+}
