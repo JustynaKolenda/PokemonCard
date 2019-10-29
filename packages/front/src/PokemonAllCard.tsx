@@ -35,7 +35,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                 
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon:any, key)=> {
-                           return <div key={pokemon.id}>
+                           return <div className="pokemonCard--box" key={pokemon.id}>
                                 <img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/>
                             </div>
                         })}

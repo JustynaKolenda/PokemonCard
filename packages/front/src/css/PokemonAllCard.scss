@@ -2,7 +2,18 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
+    max-width: 1400px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &--box {
+        display: flex;
+        align-items: baseline;
+        padding-bottom: 20px;
+        margin-right: 10px;
+    }
 
     &--cardImg{
         margin-right: 20px;
