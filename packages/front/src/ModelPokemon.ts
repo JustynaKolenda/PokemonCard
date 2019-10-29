@@ -21,3 +21,26 @@ export interface GetSets {
     totalCards: number
     updatedAt: Date
 }
+
+export interface GetSinglePokemon {
+    id: string,
+    name: string,
+    nationalPokedexNumber: number,
+    imageUrl: string,
+    imageUrlHiRes: string,
+    types: Array<any>,
+    supertype: string,
+    subtype: string,
+    hp: number,
+    retreatCost: Array<any>,
+    convertedRetreatCost: number,
+    number: number,
+    artist: string,
+    rarity: string,
+    series: string,
+    set: string,
+    setCode: string,
+    attacks: [],
+    resistances: Array<any>,
+    weaknesses: Array<any>
+}

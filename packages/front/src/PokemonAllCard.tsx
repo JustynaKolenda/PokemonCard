@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {GetList} from './ModelPokemon';
 import {getCard} from './conector';
+import { NavLink } from 'react-router-dom';
 
 type PokemonCardS= {
     pokemon: Array<GetList>
@@ -36,7 +37,8 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon:any, key)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
-                                <img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/>
+                               {console.log(pokemon.id)}
+                               <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                             </div>
                         })}
                        
