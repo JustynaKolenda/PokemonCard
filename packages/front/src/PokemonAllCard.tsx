@@ -1,5 +1,6 @@
-import * as React from 'react'
-import {GetList} from './ModelPokemon'
+import * as React from 'react';
+import {GetList} from './ModelPokemon';
+import {getCard} from './conector';
 
 type PokemonCardS= {
     pokemon: Array<GetList>
@@ -15,9 +16,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
     }
 
     public getAllCards(){
-        return fetch(`https://api.pokemontcg.io/v1/cards`)
-        .then(resp => resp.json())
-        .then(resp => {
+        getCard().then(resp => {
             this.setState({
                 pokemon: resp.cards       
             })

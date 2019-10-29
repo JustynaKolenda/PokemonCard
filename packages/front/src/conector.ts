@@ -1,3 +1,4 @@
 export function getCard() {
-    const card= "ccc"
+    return fetch(`https://api.pokemontcg.io/v1/cards`)
+    .then(resp => resp.json())
 }
