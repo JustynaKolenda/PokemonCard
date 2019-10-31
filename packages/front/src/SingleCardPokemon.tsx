@@ -121,13 +121,22 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                             </Card.Subtitle>
                         </Card.Body>
                         <Card.Body>
-                            <Card.Subtitle>{pokemon.resistances.map((ressis:any, key)=>{
-                            return <div className="singlePoke--center" key={key}>
+                            {(pokemon.resistances ?
+                                <Card.Subtitle>{pokemon.resistances.map((ressis:any, key)=>{
+                                return <div className="singlePoke--center" key={key}>
+                                        <Card.Subtitle className="mb-2 text-muted singlePoke--font12">RESISTANCES</Card.Subtitle>
+                                        <div>{ressis.type}<i>{ ressis.value}</i></div> 
+                                    </div>
+                                })}
+                                </Card.Subtitle>
+                            : 
+                                <Card.Subtitle>
+                                <div className="singlePoke--center">
                                     <Card.Subtitle className="mb-2 text-muted singlePoke--font12">RESISTANCES</Card.Subtitle>
-                                    <div>{ressis.type} <i>{ressis.value}</i></div> 
+                                    <i>N/A</i>
                                 </div>
-                            })}
-                            </Card.Subtitle>
+                                </Card.Subtitle>
+                            )}
                         </Card.Body>
                         <Card.Body>
                             <Card.Subtitle className="mb-2 text-muted singlePoke--font12 singlePoke--center">RETREAT COST</Card.Subtitle>

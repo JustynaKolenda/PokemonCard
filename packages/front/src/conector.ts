@@ -1,7 +1,12 @@
 require('dotenv').config();
 
-export function getCard() {
-    return fetch(`${process.env.REACT_APP_API}/cards`)
+export function getCard(pokemonName?:string, typePok?:string) {
+    const type = typePok;
+    const name = pokemonName;
+    // const limit = 20;
+    // const count = limit * pageNumber;
+
+    return fetch(`${process.env.REACT_APP_API}/cards?name=${name}|types=${type}`)
     .then(resp => resp.json())
 }
 
