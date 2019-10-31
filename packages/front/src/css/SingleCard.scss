@@ -15,7 +15,7 @@
 
     &--imgCard {
         float: left;
-        height: auto;
+        height: 420px;
         max-width: 100%;
     }
 
@@ -109,4 +109,46 @@
         background-position: 0px -25px;
     }
 
+    &--cardBoxWRR {
+        width: 700px;
+        flex-wrap: wrap;
+        flex-direction: unset!important;
+    }
+
+    &--center {
+        position: relative;
+        text-align: center;
+    }
+
+    &--font12 {
+        font-size: 12px!important;
+    }
+
+    &--left {
+        float: left;
+    }
+
+    &--centerFlex {
+        display: flex;
+        justify-content: center;
+    }
+
+    &--setImg {
+        bottom: 5px;
+        width: 20px;
+        margin-left: 10px;
+        position: relative;
+    }
+
+    &--font15 {
+        font-size: 15px;
+    }
+
+    &--marBottom {
+        margin-bottom: 20px;
+    }
+
+    &--colorGray {
+        color: #3a3d4cdb;
+    }
 }

@@ -5,15 +5,16 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import PokemonAllCard from './PokemonAllCard';
 import PokemonSets from './PokemonSets';
 import SingleCardPokemon from './SingleCardPokemon';
+import { PageEnum} from './EnumTypes';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/sets" component={PokemonSets}/>
-          <Route exact path="/cards/:indexPokemon" component={SingleCardPokemon} />
-          <Route exact path="/" component={PokemonAllCard}/>
+          <Route exact path={PageEnum.SETS} component={PokemonSets}/>
+          <Route exact path={`${PageEnum.SINGLE_CARD}/:indexPokemon`} component={SingleCardPokemon} />
+          <Route exact path={PageEnum.HOME} component={PokemonAllCard}/>
         </Switch>
       </Router>
     </div>
