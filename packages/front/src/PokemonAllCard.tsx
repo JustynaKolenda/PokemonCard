@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {GetList} from './ModelPokemon';
+import {ListModel} from './ModelPokemon';
 import {getCard} from './conector';
 import { NavLink } from 'react-router-dom';
 
 type PokemonCardS= {
-    pokemon: Array<GetList>
+    pokemon: Array<ListModel>
 }
 
 export class PokemonAllCard extends React.Component<any,PokemonCardS> {
@@ -21,7 +21,6 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
             this.setState({
                 pokemon: resp.cards       
             })
-            console.log(resp)
         })
     }
 
@@ -37,7 +36,6 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon:any, key)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
-                               {console.log(pokemon.id)}
                                <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                             </div>
                         })}

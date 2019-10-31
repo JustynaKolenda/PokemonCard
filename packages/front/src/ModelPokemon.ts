@@ -1,14 +1,14 @@
 
-export interface GetList {
+export type ListModel = {
     id: string,
     nam: string,
     nationalPokedexNumbe: number,
     imageUr: string,
     imageUrlHiRe: string,
-    type: []
+    type: Array<string>
 }
 
-export interface GetSets {
+export type SetsModel = {
     code: string,
     expandedLegal: boolean
     logoUrl: string,
@@ -16,23 +16,23 @@ export interface GetSets {
     ptcgoCode: string,
     releaseDate: Date,
     series: string,
-    standardLegal: false
+    standardLegal: boolean,
     symbolUrl: string,
-    totalCards: number
-    updatedAt: Date
+    totalCards: number,
+    updatedAt: Date,
 }
 
-export interface GetSinglePokemon {
+export type SingleCardModel = {
     id: string,
     name: string,
     nationalPokedexNumber: number,
     imageUrl: string,
     imageUrlHiRes: string,
-    types: Array<any>,
+    types: Array<string>,
     supertype: string,
     subtype: string,
     hp: number,
-    retreatCost: Array<any>,
+    retreatCost: Array<string>,
     convertedRetreatCost: number,
     number: number,
     artist: string,
@@ -40,7 +40,7 @@ export interface GetSinglePokemon {
     series: string,
     set: string,
     setCode: string,
-    attacks: [],
-    resistances: Array<any>,
-    weaknesses: Array<any>
+    attacks: Array<string>,
+    resistances: Array<string>,
+    weaknesses: Array<string>
 }

@@ -1,13 +1,12 @@
 import * as React from 'react';
-import {GetSets} from './ModelPokemon';
+import {SetsModel, ListModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
-import {GetList} from './ModelPokemon';
-import {getCard} from './conector';
+import {getCard, grtSetsOfPokemon} from './conector';
 
 
 type PokemonSetS= {
-    sets: Array<GetSets>,
-    cards: Array<GetList>
+    sets: Array<SetsModel>,
+    cards: Array<ListModel>
 }
 
 export class PokemonSets extends React.Component<any,PokemonSetS> {
@@ -22,9 +21,7 @@ export class PokemonSets extends React.Component<any,PokemonSetS> {
     }
 
     public getSets(){
-        return fetch(`https://api.pokemontcg.io/v1/sets`)
-        .then(resp => resp.json())
-        .then(resp => {
+        grtSetsOfPokemon().then(resp => {
             this.setState({
                 sets: resp.sets       
             })
@@ -48,15 +45,15 @@ export class PokemonSets extends React.Component<any,PokemonSetS> {
         return(
             <div>
                 <div className="pokemonSets">
-                    {this.state.sets.map((sets:any, key)=> {
+                    {this.state.sets.map((sets:SetsModel, key)=> {
                         return <div className="pokemonSets--cardBox" key={sets.name}>
                         <div className="pokemonSets--card"  onClick={this.getCardForSets} >
                             <Card.Body>
                                 <Card.Img className="pokemonSets--logoSets" variant="top" src={`${sets.logoUrl}`} />                               
                                 <Card.Subtitle className="mb-2 text-muted">{sets.name}</Card.Subtitle>
                                 <Card.Text>{sets.releaseDate}</Card.Text>
-                                <Card.Text>{(sets.standardLegal === true)? "Standard Legal": ""}</Card.Text>
-                                <Card.Text>{(sets.expandedLegal === true)? "Expanded Legal": ""}</Card.Text>
+                                <Card.Text>{(sets.standardLegal )? "Standard Legal": ""}</Card.Text>
+                                <Card.Text>{(sets.expandedLegal )? "Expanded Legal": ""}</Card.Text>
                             </Card.Body>
                         </div>
                     </div>

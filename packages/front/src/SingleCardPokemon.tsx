@@ -1,9 +1,13 @@
 import * as React from 'react';
-import {GetSinglePokemon} from './ModelPokemon';
+import {SingleCardModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
+import {getSingleCardPokemon} from './conector';
+require('dotenv').config();
+
 
 type SinglePokemonS = {
-    pokemon: GetSinglePokemon,
+    pokemon: SingleCardModel,
+    atackMap: string
 }
 
 export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
@@ -31,20 +35,50 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 attacks: [],
                 resistances: [],
                 weaknesses: []
-            }
+            },
+            atackMap : '',
         }
-        this.getSingleCard = this.getSingleCard.bind(this)
+        this.getSingleCard = this.getSingleCard.bind(this);
+        this.printIcon = this.printIcon.bind(this);
     }  
 
     public getSingleCard() {
-        fetch(`https://api.pokemontcg.io/v1/cards/${this.props.match.params.indexPokemon}`)
-            .then(resp => resp.json())
-            .then(resp => {
+        getSingleCardPokemon(this.props.match.params.indexPokemon).then(resp => {
                 this.setState({
                     pokemon: resp.card
                 })
                 console.log(resp)
             })
+    }
+
+    public async printIcon(cost:string){
+       
+        switch(cost) {
+            case 'Colorless':
+                return <i className="singlePoke--atackImg singlePoke--iconColorless"/>;
+            case 'Grass':
+                return <i className="singlePoke--atackImg singlePoke--iconGrass"/>;
+            case 'Fire':
+                return <i className="singlePoke--atackImg singlePoke--iconFire"/>;
+            case 'Water':
+                return <i className="singlePoke--atackImg singlePoke--iconWater"/>;
+            case 'Fighting':
+                return <i className="singlePoke--atackImg singlePoke--iconFight"/>;
+            case 'Lightning':
+                return <i className="singlePoke--atackImg singlePoke--iconLightning"/>;
+            case 'Psychic':
+                return <i className="singlePoke--atackImg singlePoke--iconPsychic"/>;
+            case 'Fairy':
+                return <i className="singlePoke--atackImg singlePoke--iconFairy"/>;
+            case 'Metal':
+                return <i className="singlePoke--atackImg singlePoke--iconMetal"/>;
+            case 'Darkness':
+                return <i className="singlePoke--atackImg singlePoke--iconDarkness"/>;
+            case 'Dragon':
+                return <i className="singlePoke--atackImg singlePoke--iconDragon"/>;
+            default:
+                return <span>N/A</span>
+        }
     }
 
     componentDidMount(){
@@ -68,11 +102,9 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 <Card className="singlePoke--cardBox">
                     <Card.Body>
                         <Card.Title className="singlePoke--atacks">{pokemon.attacks.map((atack:any, key)=>{
-                            return <div>
-                                <div key={atack.name} className="singlePoke--atackName"><i>{atack.cost.map((cost:any)=> {
-                                return <span> {cost === 'Colorless'? <i className="singlePoke--atackImg"/> : <i className="singlePoke--atackImgFight"/>}</span>
-                            })}</i>
-                            {atack.name} <span className="mb-2 text-muted">| {atack.damage}</span>
+                        return <div key={atack.name}>
+                                <div className="singlePoke--atackName"><div>{this.printIcon(atack.cost)}</div>
+                                    {atack.name} <span className="mb-2 text-muted">| {atack.damage}</span>
                                 </div>
                             <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle">{atack.text}</Card.Subtitle>
                             </div>

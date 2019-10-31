@@ -41,29 +41,72 @@
         color: grey;
     }
 
-    &--atackImg {
-        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
-        display: inline-block;
-        position: relative;
-        margin: 0 4px;
-        width: 25px;
-        height: 25px;
-        background-position: 75px -75px;
-        top: 6px
-    }
-
     &--atackName {
         margin-bottom: 10px;
     }
 
-    &--atackImgFight {
-        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+    &--atackImg {
         display: inline-block;
         position: relative;
         margin: 0 4px;
         width: 25px;
         height: 25px;
-        background-position: -50px -25px;
         top: 6px
     }
+
+    &--iconFight {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: -50px -25px;
+    }
+
+    &--iconColorless {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 75px -75px;
+    }
+
+    &--iconGrass {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 75px 25px;
+    }
+
+    &--iconFire {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 0 0;
+    }
+    
+    &--iconWater {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 25px 25px;
+    }
+
+    &--iconLightning {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: -25px -25px;
+    }
+
+    &--iconPsychic {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 25px -25px;
+    }
+
+    &--iconFairy {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 50px 0px;
+    }
+
+    &--iconMetal {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 25px 0px;
+    }
+
+    &--iconDarkness {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 100px 25px;
+    }
+
+    &--iconDragon {
+        background-image: url('https://pokemontcg.io/static/media/energy-types.f0fdba3b.png');
+        background-position: 0px -25px;
+    }
+
 }
