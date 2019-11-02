@@ -22,12 +22,12 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         }
         this.getAllCards = this.getAllCards.bind(this);
         this.searchByName = this.searchByName.bind(this);
-        this.searchByType = this.searchByType.bind(this);
+        // this.searchByType = this.searchByType.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
     }
 
-    public getAllCards(name:string, type:string){
-        getCard(name, type).then(resp => {
+    public getAllCards(name:string){
+        getCard(name).then(resp => {
             this.setState({
                 pokemon: resp.cards       
             })
@@ -38,17 +38,15 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.setState({
             filter: e.target.value
         })
-        this.getAllCards(e.target.value, this.state.type)
+        this.getAllCards(e.target.value)
     }
 
-    public searchByType(e:any){
-        this.setState({
-            type: e.target.value
-        })
-        
-        
-        this.getAllCards(this.state.filter,e.target.value)
-    }
+    // public searchByType(e:any){
+    //     this.setState({
+    //         type: e.target.value
+    //     })
+    //     this.getAllCards(this.state.filter,e.target.value)
+    // }
 
     public handlePageChange(pageNumber:number) {
         this.setState({activePage: pageNumber-1});
@@ -57,14 +55,17 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
 
 
     componentDidMount(){
-        this.getAllCards(this.state.filter, this.state.type)
+        this.getAllCards(this.state.filter)
+        console.log(this.props.location.search)
+        const params = new URLSearchParams(this.props.location.search)
+        params.get('name')
     }
 
     render(){
 
         return(
             <div>
-                  <input type="text" name="searchName" className="pokemonCard--searchName" value={this.state.filter || this.state.type} onChange={this.searchByName && this.searchByType} placeholder="Search name..." />
+                  <input type="text" name="searchName" className="pokemonCard--searchName" value={this.state.filter || this.state.type} onChange={this.searchByName} placeholder="Search name..." />
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon:any, key)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>

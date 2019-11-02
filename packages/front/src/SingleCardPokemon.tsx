@@ -34,7 +34,8 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 setCode: '',
                 attacks: [],
                 resistances: [],
-                weaknesses: []
+                weaknesses: [],
+                text: ''
             },
             atackMap : '',
         }
@@ -50,7 +51,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
             })
     }
 
-    public async printIcon(cost:string){
+    public  printIcon(cost:any){
         switch(cost) {
             case 'Colorless':
                 return <span className="singlePoke--atackImg singlePoke--iconColorless"/>;
@@ -92,40 +93,60 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                     <Card.Body>
                         <Card.Title >{pokemon.name}
                             <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle">{pokemon.supertype} - {pokemon.subtype} 
-                            <Card.Subtitle  className="mb-2 text-muted singlePoke--hp">HP {pokemon.hp}<i className="singlePoke--hpTitle"/></Card.Subtitle>
+                            {pokemon.types}
+                            <Card.Subtitle  className="mb-2 text-muted singlePoke--hp">{pokemon.hp > 0? <div>HP {pokemon.hp}{pokemon.types.map((type:string, key:any)=>{
+                                return <span key={key}>{this.printIcon(type)}</span>
+                            })}</div> : ""}</Card.Subtitle>
                             </Card.Subtitle>
                         </Card.Title>
                     </Card.Body>
                 </Card>
                 <Card className="singlePoke--cardBox">
                     <Card.Body>
+                    {pokemon.attacks ?
                         <Card.Title className="singlePoke--atacks">{pokemon.attacks.map((atack:any)=>{
                         return <div className="singlePoke--marBottom" key={atack.name}>
-                                {/* <div className="singlePoke--atackName"><div>{this.printIcon(atack.cost)}</div> */}
-                                <div className="singlePoke--atackName">
+                                <div className="singlePoke--atackName"><div>{atack.cost.map((cost:string, key:any)=>{
+                                    return <div key={key}>{this.printIcon(cost)}</div>
+                                })}
+                                <span className="singlePoke--atackName">
                                     {atack.name} <span className="mb-2 text-muted">{(atack.damage > 0? "|" : "")} {atack.damage}</span>
+                                </span>
+                                </div>
                                 </div>
                             <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle singlePoke--font15">{atack.text}</Card.Subtitle>
                             </div>
                         })}
                         </Card.Title>
+                        :
+                        <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle singlePoke--font15">{pokemon.text}</Card.Subtitle>
+                    }
                     </Card.Body>
                     <Card className="singlePoke--cardBoxWRR">
                         <Card.Body>
-                            <Card.Subtitle>{pokemon.weaknesses.map((week:any, key)=>{
-                            return <div className="singlePoke--center" key={key}>
-                                    <Card.Subtitle className="mb-2 text-muted singlePoke--font12">WEAKNESS</Card.Subtitle>
-                                    <div>{week.type} <i>{week.value}</i></div>
-                                </div>
-                            })}
-                            </Card.Subtitle>
+                            {pokemon.weaknesses ?
+                                <Card.Subtitle>{pokemon.weaknesses.map((week:any, key)=>{
+                                return <div className="singlePoke--center" key={key}>
+                                        <Card.Subtitle className="mb-2 text-muted singlePoke--font12">WEAKNESS</Card.Subtitle>
+                                        <div className="singlePoke--centerFlex">{this.printIcon(week.type)} <i>{week.value}</i></div>
+                                    </div>
+                                })}
+                                </Card.Subtitle>
+                            :
+                                <Card.Subtitle>
+                                    <div className="singlePoke--center">
+                                        <Card.Subtitle className="mb-2 text-muted singlePoke--font12">WEAKNESS</Card.Subtitle>
+                                        <i>N/A</i>
+                                    </div>
+                                </Card.Subtitle>
+                            }
                         </Card.Body>
                         <Card.Body>
                             {(pokemon.resistances ?
                                 <Card.Subtitle>{pokemon.resistances.map((ressis:any, key)=>{
                                 return <div className="singlePoke--center" key={key}>
                                         <Card.Subtitle className="mb-2 text-muted singlePoke--font12">RESISTANCES</Card.Subtitle>
-                                        <div>{ressis.type}<i>{ ressis.value}</i></div> 
+                                        <div className="singlePoke--centerFlex">{this.printIcon(ressis.type)}<i>{ ressis.value}</i></div> 
                                     </div>
                                 })}
                                 </Card.Subtitle>
@@ -139,23 +160,43 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                             )}
                         </Card.Body>
                         <Card.Body>
-                            <Card.Subtitle className="mb-2 text-muted singlePoke--font12 singlePoke--center">RETREAT COST</Card.Subtitle>
-                            <Card.Subtitle className="singlePoke--centerFlex">{pokemon.retreatCost.map((retreat:any, key)=>{
-                            return <div  key={key}>
-                                    <span className="singlePoke--atackImg singlePoke--iconColorless singlePoke--left"/>
+                            {pokemon.retreatCost ?
+                                <div>
+                                    <Card.Subtitle className="mb-2 text-muted singlePoke--font12 singlePoke--center">RETREAT COST</Card.Subtitle>
+                                    <Card.Subtitle className="singlePoke--centerFlex">{pokemon.retreatCost.map((retreat:any, key)=>{
+                                    return <div  key={key}>
+                                            <span className="singlePoke--atackImg singlePoke--iconColorless singlePoke--left"/>
+                                        </div>
+                                    })}
+                                    </Card.Subtitle>
                                 </div>
-                            })}
-                            </Card.Subtitle>
+                            : 
+                                <Card.Subtitle>
+                                <div className="singlePoke--center">
+                                    <Card.Subtitle className="mb-2 text-muted singlePoke--font12">RETREAT COST</Card.Subtitle>
+                                    <i>N/A</i>
+                                </div>
+                                </Card.Subtitle>
+                            }
                         </Card.Body>
                     </Card>
                     <Card className="singlePoke--cardBoxWRR">
                         <Card.Body>
-                            <Card.Subtitle>
-                                <div className="singlePoke--center">
-                                    <Card.Subtitle className="mb-2 text-muted singlePoke--font12">ARTIST</Card.Subtitle>
-                                    <div className="singlePoke--colorGray">{pokemon.artist}</div>
-                                </div>
-                            </Card.Subtitle>
+                            {pokemon.artist ?
+                                <Card.Subtitle>
+                                    <div className="singlePoke--center">
+                                        <Card.Subtitle className="mb-2 text-muted singlePoke--font12">ARTIST</Card.Subtitle>
+                                        <div className="singlePoke--colorGray">{pokemon.artist}</div>
+                                    </div>
+                                </Card.Subtitle>
+                            :    
+                                <Card.Subtitle>
+                                    <div className="singlePoke--center">
+                                        <Card.Subtitle className="mb-2 text-muted singlePoke--font12">ARTIST</Card.Subtitle>
+                                        <i>N/A</i>
+                                    </div>
+                                </Card.Subtitle>
+                            }
                         </Card.Body>
                         <Card.Body>
                             <Card.Subtitle>

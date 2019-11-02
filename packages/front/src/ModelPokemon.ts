@@ -42,5 +42,6 @@ export type SingleCardModel = {
     setCode: string,
     attacks: Array<string>,
     resistances: Array<string>,
-    weaknesses: Array<string>
+    weaknesses: Array<string>,
+    text: string
 }
