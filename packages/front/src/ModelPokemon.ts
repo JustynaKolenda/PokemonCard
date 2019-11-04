@@ -45,3 +45,9 @@ export type SingleCardModel = {
     weaknesses: Array<string>,
     text: string
 }
+
+export interface ModelFilter { 
+    name: string,
+    type: Array<string>,
+    // sets: Array<string> 
+}

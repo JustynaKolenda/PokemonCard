@@ -2,7 +2,6 @@ import * as React from 'react';
 import {SingleCardModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
 import {getSingleCardPokemon} from './conector';
-require('dotenv').config();
 
 
 type SinglePokemonS = {
