@@ -1,10 +1,9 @@
 
-export function getCard(pokemonName:string="", pokeType:string="", pokemonSets:string="" ) {
-    // const type = typePok;
-    // const name = pokemonName;
-    // const limit = 20;
-    // const count = limit * pageNumber;
+export function getCard(pageNumber?:any,pokemonName:string="", pokeType:string="", pokemonSets:string="" ) {
+    const limit = 20;
+    const count = limit * pageNumber;
     let query = new URLSearchParams({
+        pageSize: `${count}`,
         name: '',
         types: '',
         set: ''

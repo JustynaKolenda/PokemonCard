@@ -1,12 +1,14 @@
 
 export type ListModel = {
     id: string,
-    nam: string,
-    nationalPokedexNumbe: number,
+    name: string,
     imageUr: string,
     imageUrlHiRe: string,
-    type: Array<string>
+    type: Array<string>,
+    count: number
 }
+
+
 
 export type SetsModel = {
     code: string,
