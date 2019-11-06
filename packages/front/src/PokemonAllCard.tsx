@@ -45,8 +45,8 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
     }
 
     public handlePageChange(pageNumber:number) {
-        this.setState({activePage: pageNumber-1});
-        this.getAllCards(pageNumber-1)
+        this.setState({activePage: pageNumber});
+        this.getAllCards(pageNumber)
       }
 
     public handleChangeName(e:any){
@@ -65,22 +65,22 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.getAllCards(this.state.activePage,this.state.name,this.state.types,e.target.value)
     }
 
-    public handleAddToCart(cart:ListModel) {
+    // public handleAddToCart(cart:any) {
+    //     this.setState(state => {
+    //         const cartItems = state.pokemon;
+    //         localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    //         return {cartItems}
+    //     })
+    // }
+
+    public handleAddToCart(){
         this.setState(state => {
-            const cartItems = state.cartItems;
-            let cartAllredyAdd = false;
-            cartItems.forEach((item:any) => {
-                if(item.id === cart.id){
-                    cartAllredyAdd = true;
-                    item.count++
-                }
-            });
-            if(!cartAllredyAdd){
-                cartItems.push({...cart, count:1});
-            }
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            return {cartItems: cartItems}
+            const cart = this.state.pokemon.map(pokemon => {
+                return pokemon.id
+            })
+            localStorage.setItem('cartItems', JSON.stringify(cart));
         })
+      
     }
 
     componentDidMount(){
@@ -91,12 +91,12 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         return(
             <div>
                 <Filter name={this.state.name} handleChangeName={this.handleChangeName}  types={this.state.types}  handleChangeTypes={this.handleChangeTypes} set={this.state.set} handleChangeSets={this.handleChangeSets}/>
-                <FavouritePokemon pokemonItemcart={this.state.cartItems} />  
+                <FavouritePokemon pokemonItemcart={this.handleAddToCart} />  
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon:any)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
                                <div>
-                                  {/* <button className="btn btn-primary" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button> */}
+                                  <button className="btn btn-primary" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
                                   <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                                </div>
                             </div>
