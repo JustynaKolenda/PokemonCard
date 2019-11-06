@@ -9,7 +9,6 @@ import FavouritePokemon from './FavouritePokemon';
 type PokemonCardS= {
     cartItems: Array<ListModel>,
     pokemon: Array<ListModel>,
-    filtredPokemon: Array<ListModel>,
     type: string,
     activePage: number,
     name: string,
@@ -24,7 +23,6 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.state= {
             cartItems: [],
             pokemon: [],
-            filtredPokemon: [],
             type: '',
             activePage: 1,
             name: '',
@@ -36,20 +34,18 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.handlePageChange = this.handlePageChange.bind(this);
         this.handleChangeTypes = this.handleChangeTypes.bind(this);
         this.handleChangeSets =this.handleChangeSets.bind(this);
-        this.pokemonList = this.pokemonList.bind(this)
     }
 
     public getAllCards(pageNumber?:number,name?:string,types?:string,sets?:string){
         getCard(pageNumber,name,types,sets).then(resp => {
             this.setState({
-                pokemon: resp.cards,
-                filtredPokemon: resp.card      
+                pokemon: resp.cards,    
             })
         })
     }
 
     public handlePageChange(pageNumber:number) {
-        this.setState({activePage: pageNumber});
+        this.setState({activePage: pageNumber-1});
         this.getAllCards(pageNumber-1)
       }
 
@@ -57,8 +53,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.setState({
             name: e.target.value
         })
-        this.pokemonList();
-        // this.getAllCards(e.target.value,this.state.types,this.state.set)
+         this.getAllCards(e.target.value,this.state.types,this.state.set)
     }
 
     public handleChangeTypes(e:any){
@@ -70,18 +65,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.getAllCards(this.state.activePage,this.state.name,this.state.types,e.target.value)
     }
 
-    public pokemonList(){
-       this.setState(state => {
-           if(state.pokemon.length == 0){
-                const name = ''
-               this.getAllCards(this.state.activePage,name,this.state.types,this.state.set)
-           } else {
-            this.getAllCards(this.state.activePage,this.state.name,this.state.types,this.state.set)
-           }
-       })
-    }
-
-    public handleAddToCart(e:any, cart:ListModel) {
+    public handleAddToCart(cart:ListModel) {
         this.setState(state => {
             const cartItems = state.cartItems;
             let cartAllredyAdd = false;
@@ -112,7 +96,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                         {this.state.pokemon.map((pokemon:any)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
                                <div>
-                                  <button className="btn btn-primary" onClick={(e)=>this.props.handleAddToCart()}>Dodaj do ulubionych</button>
+                                  {/* <button className="btn btn-primary" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button> */}
                                   <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                                </div>
                             </div>

@@ -1,18 +1,16 @@
 
 export function getCard(pageNumber?:any,pokemonName:string="", pokeType:string="", pokemonSets:string="" ) {
-    const limit = 20;
-    const count = limit * pageNumber;
-    let query = new URLSearchParams({
-        pageSize: `${count}`,
-        name: '',
-        types: '',
-        set: ''
-        
-    });
-    query.set('name', pokemonName);
-    query.set('types', pokeType);
-    query.set('set', pokemonSets)
-
+    let query = new URLSearchParams();
+    query.set('page', pageNumber);
+    if(pokemonName != ''){
+        query.set('name', pokemonName);
+    }
+    if(pokeType != ''){
+        query.set('types', pokeType);
+    }
+    if(pokemonSets != ''){
+        query.set('set', pokemonSets);
+    }
     return fetch(`${process.env.REACT_APP_API}/cards?${query.toString()}`)
     .then(resp => resp.json())
 }
