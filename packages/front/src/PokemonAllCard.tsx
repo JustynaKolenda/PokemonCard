@@ -65,22 +65,14 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.getAllCards(this.state.activePage,this.state.name,this.state.types,e.target.value)
     }
 
-    // public handleAddToCart(cart:any) {
-    //     this.setState(state => {
-    //         const cartItems = state.pokemon;
-    //         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    //         return {cartItems}
-    //     })
-    // }
-
     public handleAddToCart(){
         this.setState(state => {
-            const cart = this.state.pokemon.map(pokemon => {
+            const cartItems = state.pokemon.map((pokemon:any) => {
                 return pokemon.id
             })
-            localStorage.setItem('cartItems', JSON.stringify(cart));
-        })
-      
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            return {cartItems}
+        }) 
     }
 
     componentDidMount(){
@@ -91,7 +83,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         return(
             <div>
                 <Filter name={this.state.name} handleChangeName={this.handleChangeName}  types={this.state.types}  handleChangeTypes={this.handleChangeTypes} set={this.state.set} handleChangeSets={this.handleChangeSets}/>
-                <FavouritePokemon pokemonItemcart={this.handleAddToCart} />  
+                <FavouritePokemon pokemonItemcart={this.state.cartItems} />  
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon:any)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>

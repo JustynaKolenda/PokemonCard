@@ -1,18 +1,20 @@
 import * as React from 'react';
-import {SingleCardModel} from './ModelPokemon';
+import {SingleCardModel, ListModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
 import {getSingleCardPokemon} from './conector';
 
 
 type SinglePokemonS = {
     pokemon: SingleCardModel,
-    atackMap: string
+    atackMap: string,
+    cartItemsId: Array<ListModel>
 }
 
 export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
     constructor(props:any){
         super(props);
         this.state= {
+            cartItemsId: [],
             pokemon: {
                 id: '',
                 name: '',
@@ -40,6 +42,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
         }
         this.getSingleCard = this.getSingleCard.bind(this);
         this.printIcon = this.printIcon.bind(this);
+        this.handleAddToCart = this.handleAddToCart.bind(this);
     }  
 
     public getSingleCard() {
@@ -78,6 +81,18 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 return <span>N/A</span>
         }
     }
+    public handleAddToCart(){
+        this.setState((state:any) => {
+            const cartItemsId = state.pokemon.id;
+            const storageId = localStorage.getItem('cartItems');
+            if(cartItemsId !== storageId ){
+                localStorage.setItem('cartItems', JSON.stringify(cartItemsId));
+            } else {
+                console.log("id już istnieje")
+            }
+            return cartItemsId
+        }) 
+    }
 
     componentDidMount(){
         this.getSingleCard()
@@ -90,6 +105,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 <img className="singlePoke--imgCard" src={`${pokemon.imageUrl}`} alt=""/>
                 <Card className="singlePoke--cardBox">
                     <Card.Body>
+                    <button className="btn btn-primary" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
                         <Card.Title >{pokemon.name}
                             <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle">{pokemon.supertype} - {pokemon.subtype} 
                             {pokemon.types}
