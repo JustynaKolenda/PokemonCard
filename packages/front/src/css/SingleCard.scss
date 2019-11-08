@@ -156,4 +156,13 @@
     &--colorGray {
         color: #3a3d4cdb;
     }
+    &--buttonStyle {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    &--marginRight {
+        margin-right: 20px;
+    }
 }

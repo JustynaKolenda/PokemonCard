@@ -2,6 +2,7 @@ import * as React from 'react';
 import {SingleCardModel, ListModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
 import {getSingleCardPokemon} from './conector';
+import { PageEnum} from './EnumTypes';
 
 
 type SinglePokemonS = {
@@ -43,6 +44,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
         this.getSingleCard = this.getSingleCard.bind(this);
         this.printIcon = this.printIcon.bind(this);
         this.handleAddToCart = this.handleAddToCart.bind(this);
+        this.handleGoToFav = this.handleGoToFav.bind(this)
     }  
 
     public getSingleCard() {
@@ -94,6 +96,10 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
         }) 
     }
 
+    public handleGoToFav(){
+        this.props.history.push(`${PageEnum.FAVOURITE}`);
+    }
+
     componentDidMount(){
         this.getSingleCard()
     }
@@ -105,7 +111,10 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 <img className="singlePoke--imgCard" src={`${pokemon.imageUrl}`} alt=""/>
                 <Card className="singlePoke--cardBox">
                     <Card.Body>
-                    <button className="btn btn-primary" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
+                        <div className="singlePoke--buttonStyle">
+                            <button className="btn btn-primary singlePoke--marginRight" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
+                            <button className="btn btn-primary" onClick={(e)=>this.handleGoToFav()}>Przejdź do ulubionych</button>
+                        </div>
                         <Card.Title >{pokemon.name}
                             <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle">{pokemon.supertype} - {pokemon.subtype} 
                             {pokemon.types}

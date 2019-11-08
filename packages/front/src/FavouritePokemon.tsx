@@ -1,19 +1,44 @@
  import * as React from 'react';
- import {ListModel} from './ModelPokemon';
+ import {getSingleCardPokemon} from './conector';
+ import {Cart} from './ModelPokemon';
 
-type ICardProps = {
-    pokemonItemcart: any
-}
+ type ICartS = {
+     cart: Cart
+ }
 
+export class FavouritePokemon extends React.Component <any,ICartS> {
+    constructor(props:any){
+        super(props);
+        this.state= {
+            cart: {
+                name: '',
+                id: ''
+            }
+        }
+        this.showCartById = this.showCartById.bind(this);
+    }
 
-export class FavouritePokemon extends React.Component <ICardProps,any> {
+    public showCartById(){
+        const pokemonItemcart = localStorage.getItem('cartItems') ;
+        const cartId = (pokemonItemcart === null)? '' : pokemonItemcart.slice(1,-1);
+        getSingleCardPokemon(cartId).then(resp => {
+            this.setState({
+                cart: resp.card
+            })
+            console.log(cartId)
+        })
+    }
+
+    componentDidMount(){
+        this.showCartById();
+    }
 
     render(){
-        const {pokemonItemcart} = this.props;
-        
+        const {cart} = this.state
     return (
-            <div className="alert alert-info" onChange={pokemonItemcart}>
-                {pokemonItemcart.length===0? "Ther are no Cards" : <div> You have {localStorage.getItem("cartItems")} Cards </div>}
+            <div className="alert alert-info" >
+                
+                {cart.id !== null? <div> You have {cart.name} Cards </div> : "You don't have favourite pokemon"}
             </div>
         )
     }

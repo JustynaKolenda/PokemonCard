@@ -9,7 +9,6 @@ export type ListModel = {
 }
 
 
-
 export type SetsModel = {
     code: string,
     expandedLegal: boolean
@@ -46,6 +45,11 @@ export type SingleCardModel = {
     resistances: Array<string>,
     weaknesses: Array<string>,
     text: string
+}
+
+export interface Cart {
+    name: string,
+    id: string
 }
 
 export interface ModelFilter { 

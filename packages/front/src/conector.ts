@@ -2,13 +2,13 @@
 export function getCard(pageNumber?:any,pokemonName:string="", pokeType:string="", pokemonSets:string="" ) {
     let query = new URLSearchParams();
     query.set('page', pageNumber);
-    if(pokemonName != ''){
+    if(pokemonName !== ''){
         query.set('name', pokemonName);
     }
-    if(pokeType != ''){
+    if(pokeType !== ''){
         query.set('types', pokeType);
     }
-    if(pokemonSets != ''){
+    if(pokemonSets !== ''){
         query.set('set', pokemonSets);
     }
     return fetch(`${process.env.REACT_APP_API}/cards?${query.toString()}`)

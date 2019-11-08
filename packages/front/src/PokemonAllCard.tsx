@@ -4,7 +4,6 @@ import {getCard} from './conector';
 import { NavLink } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import Filter from './Filter';
-import FavouritePokemon from './FavouritePokemon';
 
 type PokemonCardS= {
     cartItems: Array<ListModel>,
@@ -83,7 +82,6 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         return(
             <div>
                 <Filter name={this.state.name} handleChangeName={this.handleChangeName}  types={this.state.types}  handleChangeTypes={this.handleChangeTypes} set={this.state.set} handleChangeSets={this.handleChangeSets}/>
-                <FavouritePokemon pokemonItemcart={this.state.cartItems} />  
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon:any)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>

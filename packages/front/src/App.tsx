@@ -6,6 +6,7 @@ import PokemonAllCard from './PokemonAllCard';
 import PokemonSets from './PokemonSets';
 import SingleCardPokemon from './SingleCardPokemon';
 import { PageEnum} from './EnumTypes';
+import FavouritePokemon from './FavouritePokemon';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <Route exact path={PageEnum.SETS} component={PokemonSets}/>
+          <Route exact path={PageEnum.FAVOURITE} component={FavouritePokemon}/>
           <Route exact path={`${PageEnum.SINGLE_CARD}/:indexPokemon`} component={SingleCardPokemon} />
           <Route exact path={PageEnum.HOME} component={PokemonAllCard}/>
         </Switch>
