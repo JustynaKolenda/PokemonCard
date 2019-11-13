@@ -3,7 +3,8 @@ export enum PageEnum {
         HOME = '/',
         SETS = '/sets',
         SINGLE_CARD = '/cards',
-        FAVOURITE = '/favourite'
+        FAVOURITE = '/favourite',
+        TEAM = '/team',
 }
 
 export default {PageEnum}
