@@ -1,5 +1,5 @@
-import * as React from 'react'
-
+import * as React from 'react';
+import Circle from './Circle';
 
 type ITeamS = {
     counter: number;
@@ -28,7 +28,7 @@ export class TeamPokemon extends React.Component<any,ITeamS> {
       
     public  decrement(){
         this.setState(prevState => 
-            ({counter: prevState.counter? prevState.counter -1: 2})
+            ({counter: prevState.counter? prevState.counter -1: 0})
         )
     }
     public incrementTeam() {
@@ -39,7 +39,7 @@ export class TeamPokemon extends React.Component<any,ITeamS> {
       
     public  decrementTeam(){
         this.setState(prevState => 
-            ({counterTeam: prevState.counterTeam? prevState.counterTeam-1: 2})
+            ({counterTeam: prevState.counterTeam? prevState.counterTeam-1: 0})
         )
     }
 
@@ -62,6 +62,7 @@ export class TeamPokemon extends React.Component<any,ITeamS> {
                     <button className="team--decrement" onClick={this.decrementTeam}>-</button>
                 </div>
             </div>
+              <Circle />
             </>
         )
     }

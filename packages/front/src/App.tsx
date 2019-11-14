@@ -7,7 +7,7 @@ import PokemonSets from './PokemonSets';
 import SingleCardPokemon from './SingleCardPokemon';
 import { PageEnum} from './EnumTypes';
 import FavouritePokemon from './FavouritePokemon';
-import { TeamPokemon } from './css/TeamPokemon';
+import { TeamPokemon } from './TeamPokemon';
 
 const App: React.FC = () => {
   return (
