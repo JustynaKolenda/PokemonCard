@@ -64,16 +64,6 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.getAllCards(this.state.activePage,this.state.name,this.state.types,e.target.value)
     }
 
-    public handleAddToCart(){
-        this.setState(state => {
-            const cartItems = state.pokemon.map((pokemon:any) => {
-                return pokemon.id
-            })
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            return {cartItems}
-        }) 
-    }
-
     componentDidMount(){
         this.getAllCards()
     }
@@ -86,7 +76,13 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                         {this.state.pokemon.map((pokemon:any)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
                                <div>
-                                  <button className="btn btn-primary" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
+                                  <button className="btn btn-primary pokemonCard--buttonHeight" onClick={(e)=>{
+                                      this.setState(state => {
+                                        const cartItems = pokemon.id;
+                                        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                                        return {cartItems}
+                                    })}}
+                                    >Dodaj do ulubionych</button>
                                   <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                                </div>
                             </div>

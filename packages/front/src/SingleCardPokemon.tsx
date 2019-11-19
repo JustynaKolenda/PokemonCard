@@ -112,8 +112,8 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 <Card className="singlePoke--cardBox">
                     <Card.Body>
                         <div className="singlePoke--buttonStyle">
-                            <button className="btn btn-primary singlePoke--marginRight" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
-                            <button className="btn btn-primary" onClick={(e)=>this.handleGoToFav()}>Przejdź do ulubionych</button>
+                            <button className="btn btn-primary singlePoke--marginRight pokemonCard--buttonHeight" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
+                            <button className="btn btn-primary pokemonCard--buttonHeight" onClick={(e)=>this.handleGoToFav()}>Przejdź do ulubionych</button>
                         </div>
                         <Card.Title >{pokemon.name}
                             <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle">{pokemon.supertype} - {pokemon.subtype} 

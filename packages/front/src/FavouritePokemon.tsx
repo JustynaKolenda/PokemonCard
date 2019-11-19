@@ -12,7 +12,8 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
         this.state= {
             cart: {
                 name: '',
-                id: ''
+                id: '',
+                imageUrl: ''
             }
         }
         this.showCartById = this.showCartById.bind(this);
@@ -25,7 +26,6 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
             this.setState({
                 cart: resp.card
             })
-            console.log(cartId)
         })
     }
 
@@ -37,8 +37,10 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
         const {cart} = this.state
     return (
             <div className="alert alert-info" >
-                
-                {cart.id !== null? <div> You have {cart.name} Cards </div> : "You don't have favourite pokemon"}
+                {cart.id !== null? <div> 
+                   <div> You have {cart.name} Cards</div>
+                    <img src={`${cart.imageUrl}`} alt=""/>
+                </div> : "You don't have favourite pokemon"}
             </div>
         )
     }

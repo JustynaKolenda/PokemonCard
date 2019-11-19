@@ -49,7 +49,8 @@ export type SingleCardModel = {
 
 export interface Cart {
     name: string,
-    id: string
+    id: string,
+    imageUrl: string,
 }
 
 export interface ModelFilter { 
