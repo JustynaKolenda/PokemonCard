@@ -56,5 +56,4 @@ export interface Cart {
 export interface ModelFilter { 
     name: string,
     type: Array<string>,
-    // sets: Array<string> 
 }

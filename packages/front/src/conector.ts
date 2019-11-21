@@ -20,7 +20,7 @@ export function getSingleCardPokemon(id:string){
     .then(resp => resp.json())
 }
 
-export function grtSetsOfPokemon() {
+export function getSetsOfPokemon() {
     return fetch(`${process.env.REACT_APP_API}/sets`)
     .then(resp => resp.json())
 }

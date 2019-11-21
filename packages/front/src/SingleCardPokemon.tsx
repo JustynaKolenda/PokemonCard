@@ -8,7 +8,8 @@ import { PageEnum} from './EnumTypes';
 type SinglePokemonS = {
     pokemon: SingleCardModel,
     atackMap: string,
-    cartItemsId: Array<ListModel>
+    cartItemsId: Array<ListModel>,
+    disable: boolean
 }
 
 export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
@@ -40,6 +41,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 text: ''
             },
             atackMap : '',
+            disable : false
         }
         this.getSingleCard = this.getSingleCard.bind(this);
         this.printIcon = this.printIcon.bind(this);
@@ -49,10 +51,10 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
 
     public getSingleCard() {
         getSingleCardPokemon(this.props.match.params.indexPokemon).then(resp => {
-                this.setState({
-                    pokemon: resp.card
-                })
+            this.setState({
+                pokemon: resp.card
             })
+        })
     }
 
     public  printIcon(cost:any){
@@ -90,7 +92,9 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
             if(cartItemsId !== storageId ){
                 localStorage.setItem('cartItems', JSON.stringify(cartItemsId));
             } else {
-                console.log("id już istnieje")
+               this.setState({
+                   disable: true
+               })
             }
             return cartItemsId
         }) 
@@ -112,8 +116,8 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 <Card className="singlePoke--cardBox">
                     <Card.Body>
                         <div className="singlePoke--buttonStyle">
-                            <button className="btn btn-primary singlePoke--marginRight pokemonCard--buttonHeight" onClick={(e)=>this.handleAddToCart()}>Dodaj do ulubionych</button>
-                            <button className="btn btn-primary pokemonCard--buttonHeight" onClick={(e)=>this.handleGoToFav()}>Przejdź do ulubionych</button>
+                            <button className="btn btn-primary singlePoke--marginRight pokemonCard--buttonHeight" onClick={this.handleAddToCart} disabled={this.state.disable}>Dodaj do ulubionych</button>
+                            <button className="btn btn-primary pokemonCard--buttonHeight" onClick={this.handleGoToFav}>Przejdź do ulubionych</button>
                         </div>
                         <Card.Title >{pokemon.name}
                             <Card.Subtitle className="mb-2 text-muted singlePoke--subtitle">{pokemon.supertype} - {pokemon.subtype} 

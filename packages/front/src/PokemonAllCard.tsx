@@ -3,7 +3,7 @@ import {ListModel} from './ModelPokemon';
 import {getCard} from './conector';
 import { NavLink } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
-import Filter from './Filter';
+import {Filter} from './Filter';
 
 type PokemonCardS= {
     cartItems: Array<ListModel>,
@@ -81,8 +81,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                                         const cartItems = pokemon.id;
                                         localStorage.setItem('cartItems', JSON.stringify(cartItems));
                                         return {cartItems}
-                                    })}}
-                                    >Dodaj do ulubionych</button>
+                                    })}}>Dodaj do ulubionych</button>
                                   <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                                </div>
                             </div>
