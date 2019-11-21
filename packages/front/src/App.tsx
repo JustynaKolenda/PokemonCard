@@ -8,14 +8,12 @@ import SingleCardPokemon from './SingleCardPokemon';
 import { PageEnum} from './EnumTypes';
 import FavouritePokemon from './FavouritePokemon';
 import { TeamPokemon } from './TeamPokemon';
-import { Color } from './testcolor';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path={'/color'} component={Color}/>
           <Route exact path={PageEnum.TEAM} component={TeamPokemon}/>
           <Route exact path={PageEnum.SETS} component={PokemonSets}/>
           <Route exact path={PageEnum.FAVOURITE} component={FavouritePokemon}/>
