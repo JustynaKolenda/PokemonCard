@@ -1,6 +1,6 @@
 import * as React from 'react'
-import {SetsModel} from './ModelPokemon';
-import {getSetsOfPokemon} from './conector';
+import {SetsModel, ModelType} from './ModelPokemon';
+import {getSetsOfPokemon, getTypes} from './conector';
 
 type IProps = {
     values?:any,
@@ -19,15 +19,18 @@ type IProps = {
 
 type IState = {
     sets: Array<SetsModel>,
+    typesP: Array<ModelType>
 }
 
 export class Filter extends React.Component <IProps,IState> {
     constructor(props:IProps){
         super(props);
         this.state = {
-            sets: []
+            sets: [],
+            typesP: []
         }
         this.getSets = this.getSets.bind(this);
+        this.getTypes = this.getTypes.bind(this);
     }
 
     public getSets(){
@@ -38,8 +41,18 @@ export class Filter extends React.Component <IProps,IState> {
         })
     }
 
+    public getTypes(){
+        getTypes().then(resp => {
+            this.setState({
+                typesP: resp.types
+            })
+        })
+    }
+
     componentDidMount(){
         this.getSets();
+        this.getTypes();
+        
     }
 
     render(){
@@ -63,25 +76,16 @@ export class Filter extends React.Component <IProps,IState> {
                     <div>
                         <label htmlFor="type">Chose type of Pokemon </label>
                             <select id="type" name="type" value={types} onChange={handleChangeTypes}>
-                                <option value=""></option>
-                                <option value="colorless">Colorless</option>
-                                <option value="grass">Grass</option>
-                                <option value="fire">Fire</option>
-                                <option value="water">Water</option>
-                                <option value="fighting">Fighting</option>
-                                <option value="lightning">Lightning</option>
-                                <option value="psychic">Psychic</option>
-                                <option value="fairy">Fairy</option>
-                                <option value="metal">Metal</option>
-                                <option value="darkness">Darkness</option>
-                                <option value="dragon">Dragon</option>
+                                {this.state.typesP.map((type: any)=> {
+                                    return <option key={type} value={type}>{type}</option>
+                                })}
                             </select>
                     </div>
                     <div>
                         <label htmlFor="sets">Chose sets</label>
                             <select id="set" name="set" value={set} onChange={handleChangeSets}>
                                 {this.state.sets.map((sets:SetsModel)=> {
-                                        return <option value={sets.name}>{sets.name}</option>
+                                        return <option key={sets.name} value={sets.name}>{sets.name}</option>
                                     })
                                 }
                             </select>

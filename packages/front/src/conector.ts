@@ -24,3 +24,8 @@ export function getSetsOfPokemon() {
     return fetch(`${process.env.REACT_APP_API}/sets`)
     .then(resp => resp.json())
 }
+
+export function getTypes() {
+    return fetch(`${process.env.REACT_APP_API}/types`)
+    .then(resp => resp.json())
+}

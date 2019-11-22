@@ -77,11 +77,12 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
                                <div>
                                   <button className="btn btn-primary pokemonCard--buttonHeight" onClick={(e)=>{
-                                      this.setState(state => {
-                                        const cartItems = pokemon.id;
-                                        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-                                        return {cartItems}
-                                    })}}>Dodaj do ulubionych</button>
+                                       const cartItems = pokemon.id;
+                                       localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                                       this.setState({
+                                          cartItems
+                                       })
+                                    }}>Dodaj do ulubionych</button>
                                   <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                                </div>
                             </div>

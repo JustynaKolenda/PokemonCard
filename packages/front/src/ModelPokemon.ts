@@ -57,3 +57,36 @@ export interface ModelFilter {
     name: string,
     type: Array<string>,
 }
+
+export interface ModelType {
+    name: string
+}
+
+export class pokemonModel {
+    pokemon: SingleCardModel
+    constructor(){
+        this.pokemon = {
+            id: '',
+            name: '',
+            nationalPokedexNumber: 0,
+            imageUrl: '',
+            imageUrlHiRes: '',
+            types: [],
+            supertype: '',
+            subtype: '',
+            hp: 0,
+            retreatCost: [],
+            convertedRetreatCost: 0,
+            number: 0,
+            artist: '',
+            rarity: '',
+            series: '',
+            set: '',
+            setCode: '',
+            attacks: [],
+            resistances: [],
+            weaknesses: [],
+            text: ''
+        }
+    } 
+}

@@ -1,45 +1,24 @@
 import * as React from 'react';
-import {SingleCardModel, ListModel} from './ModelPokemon';
+import {pokemonModel, ListModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
 import {getSingleCardPokemon} from './conector';
 import { PageEnum} from './EnumTypes';
 
 
 type SinglePokemonS = {
-    pokemon: SingleCardModel,
+    pokemon: any,
     atackMap: string,
     cartItemsId: Array<ListModel>,
     disable: boolean
 }
+
 
 export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
     constructor(props:any){
         super(props);
         this.state= {
             cartItemsId: [],
-            pokemon: {
-                id: '',
-                name: '',
-                nationalPokedexNumber: 0,
-                imageUrl: '',
-                imageUrlHiRes: '',
-                types: [],
-                supertype: '',
-                subtype: '',
-                hp: 0,
-                retreatCost: [],
-                convertedRetreatCost: 0,
-                number: 0,
-                artist: '',
-                rarity: '',
-                series: '',
-                set: '',
-                setCode: '',
-                attacks: [],
-                resistances: [],
-                weaknesses: [],
-                text: ''
-            },
+            pokemon: new pokemonModel(),
             atackMap : '',
             disable : false
         }
@@ -86,17 +65,17 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
         }
     }
     public handleAddToCart(){
-        this.setState((state:any) => {
-            const cartItemsId = state.pokemon.id;
-            const storageId = localStorage.getItem('cartItems');
-            if(cartItemsId !== storageId ){
-                localStorage.setItem('cartItems', JSON.stringify(cartItemsId));
-            } else {
-               this.setState({
-                   disable: true
-               })
-            }
-            return cartItemsId
+        const cartItemsId = this.state.pokemon.id;
+        const storageId = localStorage.getItem('cartItems');
+        if(cartItemsId !== storageId ){
+            localStorage.setItem('cartItems', JSON.stringify(cartItemsId));
+        } else {
+           this.setState({
+               disable: true
+           })
+        }
+        this.setState({
+            cartItemsId
         }) 
     }
 
@@ -153,7 +132,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                     <Card className="singlePoke--cardBoxWRR">
                         <Card.Body>
                             {pokemon.weaknesses ?
-                                <Card.Subtitle>{pokemon.weaknesses.map((week:any, key)=>{
+                                <Card.Subtitle>{pokemon.weaknesses.map((week:any, key:string)=>{
                                 return <div className="singlePoke--center" key={key}>
                                         <Card.Subtitle className="mb-2 text-muted singlePoke--font12">WEAKNESS</Card.Subtitle>
                                         <div className="singlePoke--centerFlex">{this.printIcon(week.type)} <i>{week.value}</i></div>
@@ -171,7 +150,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                         </Card.Body>
                         <Card.Body>
                             {(pokemon.resistances ?
-                                <Card.Subtitle>{pokemon.resistances.map((ressis:any, key)=>{
+                                <Card.Subtitle>{pokemon.resistances.map((ressis:any, key:string)=>{
                                 return <div className="singlePoke--center" key={key}>
                                         <Card.Subtitle className="mb-2 text-muted singlePoke--font12">RESISTANCES</Card.Subtitle>
                                         <div className="singlePoke--centerFlex">{this.printIcon(ressis.type)}<i>{ ressis.value}</i></div> 
@@ -191,7 +170,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                             {pokemon.retreatCost ?
                                 <div>
                                     <Card.Subtitle className="mb-2 text-muted singlePoke--font12 singlePoke--center">RETREAT COST</Card.Subtitle>
-                                    <Card.Subtitle className="singlePoke--centerFlex">{pokemon.retreatCost.map((retreat:any, key)=>{
+                                    <Card.Subtitle className="singlePoke--centerFlex">{pokemon.retreatCost.map((retreat:any, key:string)=>{
                                     return <div  key={key}>
                                             <span className="singlePoke--atackImg singlePoke--iconColorless singlePoke--left"/>
                                         </div>
