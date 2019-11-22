@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {pokemonModel, ListModel} from './ModelPokemon';
+import {PokemonModel, ListModel, SingleCardModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
 import {getSingleCardPokemon} from './conector';
 import { PageEnum} from './EnumTypes';
 
 
 type SinglePokemonS = {
-    pokemon: any,
+    pokemon: SingleCardModel,
     atackMap: string,
     cartItemsId: Array<ListModel>,
     disable: boolean
@@ -18,7 +18,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
         super(props);
         this.state= {
             cartItemsId: [],
-            pokemon: new pokemonModel(),
+            pokemon: new PokemonModel(),
             atackMap : '',
             disable : false
         }

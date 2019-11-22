@@ -62,31 +62,26 @@ export interface ModelType {
     name: string
 }
 
-export class pokemonModel {
-    pokemon: SingleCardModel
-    constructor(){
-        this.pokemon = {
-            id: '',
-            name: '',
-            nationalPokedexNumber: 0,
-            imageUrl: '',
-            imageUrlHiRes: '',
-            types: [],
-            supertype: '',
-            subtype: '',
-            hp: 0,
-            retreatCost: [],
-            convertedRetreatCost: 0,
-            number: 0,
-            artist: '',
-            rarity: '',
-            series: '',
-            set: '',
-            setCode: '',
-            attacks: [],
-            resistances: [],
-            weaknesses: [],
-            text: ''
-        }
-    } 
+export class PokemonModel {
+    id:string = "";
+    name: string = '';
+    nationalPokedexNumber:number = 0;
+    imageUrl: string = '';
+    imageUrlHiRes: string = '';
+    types: Array<string> = [];
+    supertype: string = '';
+    subtype: string = '';
+    hp: number = 0;
+    retreatCost: Array<string> = [];
+    convertedRetreatCost: number = 0;
+    number: number = 0;
+    artist: string = '';
+    rarity: string = '';
+    series: string = '';
+    set: string = '';
+    setCode: string = '';
+    attacks: Array<string> = [];
+    resistances: Array<string> = [];
+    weaknesses: Array<string> = [];
+    text: string = ''
 }
