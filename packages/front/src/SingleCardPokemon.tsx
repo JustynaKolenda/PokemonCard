@@ -8,7 +8,7 @@ import { PageEnum} from './EnumTypes';
 type SinglePokemonS = {
     pokemon: SingleCardModel,
     atackMap: string,
-    cartItemsId: Array<ListModel>,
+    cartItemsId: Array<string>,
     disable: boolean
 }
 
@@ -132,7 +132,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                     <Card className="singlePoke--cardBoxWRR">
                         <Card.Body>
                             {pokemon.weaknesses ?
-                                <Card.Subtitle>{pokemon.weaknesses.map((week:any, key:string)=>{
+                                <Card.Subtitle>{pokemon.weaknesses.map((week, key)=>{
                                 return <div className="singlePoke--center" key={key}>
                                         <Card.Subtitle className="mb-2 text-muted singlePoke--font12">WEAKNESS</Card.Subtitle>
                                         <div className="singlePoke--centerFlex">{this.printIcon(week.type)} <i>{week.value}</i></div>
@@ -150,7 +150,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                         </Card.Body>
                         <Card.Body>
                             {(pokemon.resistances ?
-                                <Card.Subtitle>{pokemon.resistances.map((ressis:any, key:string)=>{
+                                <Card.Subtitle>{pokemon.resistances.map((ressis, key)=>{
                                 return <div className="singlePoke--center" key={key}>
                                         <Card.Subtitle className="mb-2 text-muted singlePoke--font12">RESISTANCES</Card.Subtitle>
                                         <div className="singlePoke--centerFlex">{this.printIcon(ressis.type)}<i>{ ressis.value}</i></div> 
@@ -170,7 +170,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                             {pokemon.retreatCost ?
                                 <div>
                                     <Card.Subtitle className="mb-2 text-muted singlePoke--font12 singlePoke--center">RETREAT COST</Card.Subtitle>
-                                    <Card.Subtitle className="singlePoke--centerFlex">{pokemon.retreatCost.map((retreat:any, key:string)=>{
+                                    <Card.Subtitle className="singlePoke--centerFlex">{pokemon.retreatCost.map((retreat, key)=>{
                                     return <div  key={key}>
                                             <span className="singlePoke--atackImg singlePoke--iconColorless singlePoke--left"/>
                                         </div>

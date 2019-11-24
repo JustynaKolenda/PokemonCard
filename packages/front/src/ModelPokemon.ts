@@ -42,9 +42,19 @@ export type SingleCardModel = {
     set: string,
     setCode: string,
     attacks: Array<string>,
-    resistances: Array<string>,
-    weaknesses: Array<string>,
+    resistances: Array<ResistancesItem>,
+    weaknesses: Array<WeaknessesItem>,
     text: string
+}
+
+type ResistancesItem = {
+    value: number,
+    type: string
+}
+
+type WeaknessesItem = {
+    value: number,
+    type: string
 }
 
 export interface Cart {
@@ -63,25 +73,25 @@ export interface ModelType {
 }
 
 export class PokemonModel {
-    id:string = "";
-    name: string = '';
-    nationalPokedexNumber:number = 0;
-    imageUrl: string = '';
-    imageUrlHiRes: string = '';
-    types: Array<string> = [];
-    supertype: string = '';
-    subtype: string = '';
-    hp: number = 0;
-    retreatCost: Array<string> = [];
-    convertedRetreatCost: number = 0;
-    number: number = 0;
-    artist: string = '';
-    rarity: string = '';
-    series: string = '';
-    set: string = '';
-    setCode: string = '';
-    attacks: Array<string> = [];
-    resistances: Array<string> = [];
-    weaknesses: Array<string> = [];
-    text: string = ''
+    id = "";
+    name = '';
+    nationalPokedexNumber = 0;
+    imageUrl = '';
+    imageUrlHiRes = '';
+    types = [];
+    supertype = '';
+    subtype = '';
+    hp = 0;
+    retreatCost = [];
+    convertedRetreatCost = 0;
+    number = 0;
+    artist = '';
+    rarity = '';
+    series = '';
+    set = '';
+    setCode = '';
+    attacks = [];
+    resistances = [];
+    weaknesses = [];
+    text = ''
 }
