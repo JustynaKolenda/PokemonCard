@@ -1,32 +1,31 @@
  import * as React from 'react';
- import {getSingleCardPokemon} from './conector';
+ import {getCard} from './conector';
  import {Cart} from './ModelPokemon';
 
  type ICartS = {
-     cart: Cart
+     carts: Array<Cart>
  }
 
 export class FavouritePokemon extends React.Component <any,ICartS> {
     constructor(props:any){
         super(props);
         this.state= {
-            cart: {
-                name: '',
-                id: '',
-                imageUrl: ''
-            }
+            carts: []
         }
         this.showCartById = this.showCartById.bind(this);
     }
 
     public showCartById(){
-        const pokemonItemcart = localStorage.getItem('cartItems') ;
-        const cartId = (pokemonItemcart === null)? '' : pokemonItemcart.slice(1,-1);
-        getSingleCardPokemon(cartId).then(resp => {
-            this.setState({
-                cart: resp.card
+        const pokemonItemcart = localStorage.getItem('cartItems');
+        if(pokemonItemcart != null){
+            let favouriteItemsId = JSON.parse(pokemonItemcart);
+            let stringArray = favouriteItemsId.join('|').toString();
+            getCard(stringArray).then(resp => {
+                this.setState({
+                    carts: resp.cards
+                })
             })
-        })
+        }
     }
 
     componentDidMount(){
@@ -34,13 +33,22 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
     }
 
     render(){
-        const {cart} = this.state
     return (
             <div className="alert alert-info" >
-                {cart.id !== null? <div> 
-                   <div> You have {cart.name} Cards</div>
-                    <img src={`${cart.imageUrl}`} alt=""/>
-                </div> : "You don't have favourite pokemon"}
+                <div>
+                    <div>{this.state.carts.length !== null? 
+                        <div>
+                            {this.state.carts.map((cart) => {
+                                <div key={cart.id}> 
+                                    <div> You have {cart.id} Cards</div>
+                                    <img src={`${cart.imageUrl}`} alt=""/>
+                                </div>
+                            })}
+                        </div>
+                        : "You don't have favourite carts"
+                    }
+                    </div>
+                </div> 
             </div>
         )
     }

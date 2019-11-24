@@ -9,7 +9,8 @@ type SinglePokemonS = {
     pokemon: SingleCardModel,
     atackMap: string,
     cartItemsId: Array<string>,
-    disable: boolean
+    disable: boolean,
+    favouriteItems : Array<string>
 }
 
 
@@ -18,6 +19,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
         super(props);
         this.state= {
             cartItemsId: [],
+            favouriteItems: [],
             pokemon: new PokemonModel(),
             atackMap : '',
             disable : false
@@ -66,16 +68,23 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
     }
     public handleAddToCart(){
         const cartItemsId = this.state.pokemon.id;
-        const storageId = localStorage.getItem('cartItems');
-        if(cartItemsId !== storageId ){
-            localStorage.setItem('cartItems', JSON.stringify(cartItemsId));
+        const storageIds = localStorage.getItem('cartItems');
+        var favouriteItems = [];
+
+        if(storageIds == null ){
+            favouriteItems.push(cartItemsId);
+            localStorage.setItem('cartItems', JSON.stringify(favouriteItems))
+            this.setState({
+                disable:true
+            })
         } else {
-           this.setState({
-               disable: true
-           })
+            let newStorageIds =  JSON.parse(storageIds);
+            newStorageIds.push(cartItemsId);
+            localStorage.setItem('cartItems', JSON.stringify(newStorageIds));
         }
         this.setState({
-            cartItemsId
+            favouriteItems,
+            disable: true
         }) 
     }
 
@@ -84,7 +93,17 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
     }
 
     componentDidMount(){
-        this.getSingleCard()
+        this.getSingleCard();
+        let getStorage = localStorage.getItem('cartItems');
+        if(getStorage != null){
+            let parseStorage = JSON.parse(getStorage);
+            if(parseStorage.includes(this.props.match.params.indexPokemon)){
+                this.setState({
+                    disable: true
+                })
+            }
+        }
+        
     }
 
     render(){

@@ -4,16 +4,17 @@ import {getCard} from './conector';
 import { NavLink } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import {Filter} from './Filter';
+import { DH_NOT_SUITABLE_GENERATOR } from 'constants';
 
 type PokemonCardS= {
-    cartItems: Array<ListModel>,
+    cartItems: Array<string>,
     pokemon: Array<ListModel>,
     type: string,
     activePage: number,
     name: string,
     types: string,
-    set: string
-
+    set: string,
+    favouriteItems: Array<string>,
 }
 
 export class PokemonAllCard extends React.Component<any,PokemonCardS> {
@@ -26,13 +27,15 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
             activePage: 1,
             name: '',
             types: '',
-            set: ''
+            set: '',
+            favouriteItems: [],
         }
         this.getAllCards = this.getAllCards.bind(this);
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
         this.handleChangeTypes = this.handleChangeTypes.bind(this);
         this.handleChangeSets =this.handleChangeSets.bind(this);
+        this.addToFavourite = this.addToFavourite.bind(this);
     }
 
     public getAllCards(pageNumber?:number,name?:string,types?:string,sets?:string){
@@ -64,8 +67,36 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.getAllCards(this.state.activePage,this.state.name,this.state.types,e.target.value)
     }
 
+    public addToFavourite(pokemonId: string){
+        const cartItems = pokemonId;
+        let storageIds = localStorage.getItem('cartItems');
+        var favouriteItems = [];
+        if(storageIds == null ){
+             favouriteItems.push(cartItems);
+             localStorage.setItem('cartItems', JSON.stringify(favouriteItems))
+             this.setState({
+                favouriteItems
+            })
+        } else {
+             let favouriteItems =  JSON.parse(storageIds);
+                if(!favouriteItems.includes(cartItems)){
+                    favouriteItems.push(cartItems);
+                    localStorage.setItem('cartItems', JSON.stringify(favouriteItems));
+                    this.setState({
+                        favouriteItems
+                    })
+                }
+        } 
+     }
+
     componentDidMount(){
-        this.getAllCards()
+        this.getAllCards();
+        let getStorage = localStorage.getItem('cartItems');
+        if(getStorage != null){
+            this.setState({
+                favouriteItems: JSON.parse(getStorage)
+            })   
+        }
     }
 
     render(){
@@ -73,16 +104,10 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
             <div>
                 <Filter name={this.state.name} handleChangeName={this.handleChangeName}  types={this.state.types}  handleChangeTypes={this.handleChangeTypes} set={this.state.set} handleChangeSets={this.handleChangeSets}/>
                     <div className="pokemonCard">
-                        {this.state.pokemon.map((pokemon:any)=> {
+                        {this.state.pokemon.map((pokemon)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
                                <div>
-                                  <button className="btn btn-primary pokemonCard--buttonHeight" onClick={(e)=>{
-                                       const cartItems = pokemon.id;
-                                       localStorage.setItem('cartItems', JSON.stringify(cartItems));
-                                       this.setState({
-                                          cartItems
-                                       })
-                                    }}>Dodaj do ulubionych</button>
+                                  <button className="btn btn-primary pokemonCard--buttonHeight" disabled={this.state.favouriteItems.includes(pokemon.id)} onClick={()=> this.addToFavourite(pokemon.id)}>Dodaj do ulubionych</button>
                                   <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                                </div>
                             </div>

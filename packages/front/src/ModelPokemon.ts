@@ -2,7 +2,7 @@
 export type ListModel = {
     id: string,
     name: string,
-    imageUr: string,
+    imageUrl: string,
     imageUrlHiRe: string,
     type: Array<string>,
     count: number
