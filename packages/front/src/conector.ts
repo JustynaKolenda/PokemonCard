@@ -1,5 +1,5 @@
 
-export function getCard(pageNumber?:any,pokemonName:string="", pokeType:string="", pokemonSets:string="",pokemonId:string="" ) {
+export function getCard(pageNumber?:any,pokemonName:string="", pokeType:string="", pokemonSets:string="" ) {
     let query = new URLSearchParams();
     query.set('page', pageNumber);
     if(pokemonName !== ''){
@@ -11,6 +11,13 @@ export function getCard(pageNumber?:any,pokemonName:string="", pokeType:string="
     if(pokemonSets !== ''){
         query.set('set', pokemonSets);
     }
+    
+    return fetch(`${process.env.REACT_APP_API}/cards?${query.toString()}`)
+    .then(resp => resp.json());
+}
+
+export function getFavouritCards(pokemonId:string){
+    let query = new URLSearchParams();
     if(pokemonId !== ''){
         query.set('id', pokemonId);
     }

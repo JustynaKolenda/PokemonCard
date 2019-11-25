@@ -1,5 +1,5 @@
  import * as React from 'react';
- import {getCard} from './conector';
+ import {getFavouritCards} from './conector';
  import {Cart} from './ModelPokemon';
 
  type ICartS = {
@@ -22,7 +22,7 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
         if(pokemonItemcart != null){
             let favouriteItemsId = JSON.parse(pokemonItemcart);
             let stringArray = favouriteItemsId.join('|');
-            getCard(stringArray).then(resp => {
+            getFavouritCards(stringArray).then(resp => {
                 this.setState({
                     carts: resp.cards
                 })
@@ -44,12 +44,12 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
     return (
             <div className="alert alert-info" >
                 <div>
-                    <div>{ this.state.favouriteItems== true?
-                        <div>
+                    <div>{ this.state.favouriteItems == true?
+                          <div className="pokemonCardFavourit">
                             {this.state.carts.map((cart: Cart, key) => {
-                               return <div key={key}> 
+                               return <div  key={key}> 
                                         <div> My favourite Cart: {cart.name}</div>
-                                        <img src={`${cart.imageUrl}`} alt=""/>
+                                        <img className="pokemonCardFavourit--box" src={`${cart.imageUrl}`} alt=""/>
                                     </div>
                             })}
                         </div>
