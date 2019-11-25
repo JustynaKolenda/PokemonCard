@@ -4,7 +4,6 @@ import {getCard} from './conector';
 import { NavLink } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import {Filter} from './Filter';
-import { DH_NOT_SUITABLE_GENERATOR } from 'constants';
 
 type PokemonCardS= {
     cartItems: Array<string>,
@@ -36,6 +35,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.handleChangeTypes = this.handleChangeTypes.bind(this);
         this.handleChangeSets =this.handleChangeSets.bind(this);
         this.addToFavourite = this.addToFavourite.bind(this);
+        this.handleChanges = this.handleChanges.bind(this);
     }
 
     public getAllCards(pageNumber?:number,name?:string,types?:string,sets?:string){
@@ -48,14 +48,14 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
 
     public handlePageChange(pageNumber:number) {
         this.setState({activePage: pageNumber});
-        this.getAllCards(pageNumber)
+        this.getAllCards(pageNumber,this.state.name,this.state.types,this.state.set)
       }
 
     public handleChangeName(e:any){
         this.setState({
             name: e.target.value
         })
-         this.getAllCards(e.target.value,this.state.types,this.state.set)
+         this.getAllCards(this.state.activePage,e.target.value,this.state.types,this.state.set)
     }
 
     public handleChangeTypes(e:any){
@@ -65,6 +65,24 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
     public handleChangeSets(e:any){
         this.setState({set: e.target.value});
         this.getAllCards(this.state.activePage,this.state.name,this.state.types,e.target.value)
+    }
+
+    public handleChanges(e:any){
+        switch(e) {
+            case this.state.name:
+                this.setState({
+                    name: e.target.value
+                })
+            case this.state.types:
+                this.setState({
+                    types: e.target.value
+                })
+            case this.state.set:
+                this.setState({
+                    set: e.target.value
+                })
+        }
+        this.getAllCards(this.state.activePage,this.state.name,this.state.types,this.state.set)
     }
 
     public addToFavourite(pokemonId: string){
@@ -106,9 +124,9 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                     <div className="pokemonCard">
                         {this.state.pokemon.map((pokemon)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
-                               <div>
-                                  <button className="btn btn-primary pokemonCard--buttonHeight" disabled={this.state.favouriteItems.includes(pokemon.id)} onClick={()=> this.addToFavourite(pokemon.id)}>Dodaj do ulubionych</button>
+                               <div className="pokemonCard--groupBox">
                                   <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
+                                  <button className="btn btn-primary pokemonCard--buttonHeight pokemonCard--buttonSpecific" disabled={this.state.favouriteItems.includes(pokemon.id)} onClick={()=> this.addToFavourite(pokemon.id)}>Dodaj do ulubionych</button>
                                </div>
                             </div>
                         })}

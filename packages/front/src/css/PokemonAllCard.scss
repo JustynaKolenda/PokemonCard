@@ -13,6 +13,7 @@
         align-items: baseline;
         padding-bottom: 20px;
         margin-right: 10px;
+        width: 270px;
     }
 
     &--cardImg {
@@ -22,5 +23,20 @@
 
     &--buttonHeight {
         height: 60px;
+    }
+
+    &--buttonSpecific {
+        position: relative;
+        padding-left: 35px!important;
+        padding-right: 35px!important;
+        left: -6px;
+        height: 30px;
+        top: -15px;
+    }
+
+    &--groupBox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }

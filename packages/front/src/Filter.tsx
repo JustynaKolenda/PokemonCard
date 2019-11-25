@@ -14,7 +14,8 @@ type IProps = {
     handleChangeTypes?:any,
     handleChangeSets?:any,
     name?: string,
-    handleChangeName?: any
+    handleChangeName?: any,
+    handleChanges?:any,
 }
 
 type IState = {
@@ -63,7 +64,8 @@ export class Filter extends React.Component <IProps,IState> {
             handleChangeTypes,
             handleChangeSets,
             name,
-            handleChangeName
+            handleChangeName,
+            handleChanges
         } = this.props;
 
     return (

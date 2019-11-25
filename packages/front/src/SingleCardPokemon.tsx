@@ -10,7 +10,8 @@ type SinglePokemonS = {
     atackMap: string,
     cartItemsId: Array<string>,
     disable: boolean,
-    favouriteItems : Array<string>
+    favouriteItems : Array<string>,
+    star: boolean
 }
 
 
@@ -22,7 +23,8 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
             favouriteItems: [],
             pokemon: new PokemonModel(),
             atackMap : '',
-            disable : false
+            disable : false,
+            star: false
         }
         this.getSingleCard = this.getSingleCard.bind(this);
         this.printIcon = this.printIcon.bind(this);
@@ -75,7 +77,8 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
             favouriteItems.push(cartItemsId);
             localStorage.setItem('cartItems', JSON.stringify(favouriteItems))
             this.setState({
-                disable:true
+                disable:true,
+                star: true
             })
         } else {
             let newStorageIds =  JSON.parse(storageIds);
@@ -84,7 +87,8 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
         }
         this.setState({
             favouriteItems,
-            disable: true
+            disable: true,
+            star: true
         }) 
     }
 
@@ -99,7 +103,8 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
             let parseStorage = JSON.parse(getStorage);
             if(parseStorage.includes(this.props.match.params.indexPokemon)){
                 this.setState({
-                    disable: true
+                    disable: true,
+                    star: true
                 })
             }
         }
@@ -113,6 +118,7 @@ export class SingleCardPokemon extends React.Component <any,SinglePokemonS> {
                 <img className="singlePoke--imgCard" src={`${pokemon.imageUrl}`} alt=""/>
                 <Card className="singlePoke--cardBox">
                     <Card.Body>
+                        {this.state.star? <img src={'css/star.jpg'} className="singlePoke--star"/> : <div></div>}
                         <div className="singlePoke--buttonStyle">
                             <button className="btn btn-primary singlePoke--marginRight pokemonCard--buttonHeight" onClick={this.handleAddToCart} disabled={this.state.disable}>Dodaj do ulubionych</button>
                             <button className="btn btn-primary pokemonCard--buttonHeight" onClick={this.handleGoToFav}>Przejdź do ulubionych</button>
