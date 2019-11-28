@@ -6,9 +6,7 @@ import Pagination from 'react-js-pagination';
 import {Filter} from './Filter';
 
 type PokemonCardS= {
-    cartItems: Array<string>,
     pokemon: Array<ListModel>,
-    type: string,
     activePage: number,
     name: string,
     types: string,
@@ -20,9 +18,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
     constructor(props:any){
         super(props);
         this.state= {
-            cartItems: [],
             pokemon: [],
-            type: '',
             activePage: 1,
             name: '',
             types: '',
@@ -35,54 +31,51 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
         this.handleChangeTypes = this.handleChangeTypes.bind(this);
         this.handleChangeSets =this.handleChangeSets.bind(this);
         this.addToFavourite = this.addToFavourite.bind(this);
-        this.handleChanges = this.handleChanges.bind(this);
+        this.getFilters = this.getFilters.bind(this);
+        this.filterCallbac = this.filterCallbac.bind(this);
     }
 
-    public getAllCards(pageNumber?:number,name?:string,types?:string,sets?:string){
-        getCard(pageNumber,name,types,sets).then(resp => {
+    public getAllCards(pageNumber:number){
+        const filters = this.getFilters()
+        getCard(pageNumber, filters).then(resp => {
             this.setState({
                 pokemon: resp.cards,    
             })
         })
     }
 
+    public getFilters(){
+        const filter = new URLSearchParams();
+        if(this.state.name !== ''){
+            filter.set('name', this.state.name);
+        }
+        if(this.state.types !== ''){
+            filter.set('types', this.state.types);
+        }
+        if(this.state.set !== ''){
+            filter.set('set', this.state.set);
+        }
+        return filter
+    }
+
     public handlePageChange(pageNumber:number) {
         this.setState({activePage: pageNumber});
-        this.getAllCards(pageNumber,this.state.name,this.state.types,this.state.set)
+        this.getAllCards(pageNumber)
       }
 
+    public filterCallbac(){
+        this.getAllCards(this.state.activePage)
+    }
+
     public handleChangeName(e:any){
-        this.setState({
-            name: e.target.value
-        })
-         this.getAllCards(this.state.activePage,e.target.value,this.state.types,this.state.set)
+        this.setState({name: e.target.value}, this.filterCallbac);
     }
 
     public handleChangeTypes(e:any){
-        this.setState({types: e.target.value});
-        this.getAllCards(this.state.activePage,this.state.name, e.target.value, this.state.set)
+        this.setState({types: e.target.value}, this.filterCallbac);
     }
     public handleChangeSets(e:any){
-        this.setState({set: e.target.value});
-        this.getAllCards(this.state.activePage,this.state.name,this.state.types,e.target.value)
-    }
-
-    public handleChanges(e:any){
-        switch(e) {
-            case this.state.name:
-                this.setState({
-                    name: e.target.value
-                })
-            case this.state.types:
-                this.setState({
-                    types: e.target.value
-                })
-            case this.state.set:
-                this.setState({
-                    set: e.target.value
-                })
-        }
-        this.getAllCards(this.state.activePage,this.state.name,this.state.types,this.state.set)
+        this.setState({set: e.target.value}, this.filterCallbac);
     }
 
     public addToFavourite(pokemonId: string){
@@ -108,7 +101,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
      }
 
     componentDidMount(){
-        this.getAllCards();
+        this.getAllCards(this.state.activePage);
         let getStorage = localStorage.getItem('cartItems');
         if(getStorage != null){
             this.setState({
@@ -125,7 +118,7 @@ export class PokemonAllCard extends React.Component<any,PokemonCardS> {
                         {this.state.pokemon.map((pokemon)=> {
                            return <div className="pokemonCard--box" key={pokemon.id}>
                                <div className="pokemonCard--groupBox">
-                                  <NavLink to={`cards/${pokemon.id}`}><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
+                                  <NavLink to={`cards/${pokemon.id}`} className="pokemonCard--linkImg"><img className="pokemonCard--cardImg" src={`${pokemon.imageUrl}`} alt=""/></NavLink>
                                   <button className="btn btn-primary pokemonCard--buttonHeight pokemonCard--buttonSpecific" disabled={this.state.favouriteItems.includes(pokemon.id)} onClick={()=> this.addToFavourite(pokemon.id)}>Dodaj do ulubionych</button>
                                </div>
                             </div>

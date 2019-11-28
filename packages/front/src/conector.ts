@@ -1,27 +1,7 @@
 
-export function getCard(pageNumber?:any,pokemonName:string="", pokeType:string="", pokemonSets:string="" ) {
-    let query = new URLSearchParams();
-    query.set('page', pageNumber);
-    if(pokemonName !== ''){
-        query.set('name', pokemonName);
-    }
-    if(pokeType !== ''){
-        query.set('types', pokeType);
-    }
-    if(pokemonSets !== ''){
-        query.set('set', pokemonSets);
-    }
-    
-    return fetch(`${process.env.REACT_APP_API}/cards?${query.toString()}`)
-    .then(resp => resp.json());
-}
-
-export function getFavouritCards(pokemonId:string){
-    let query = new URLSearchParams();
-    if(pokemonId !== ''){
-        query.set('id', pokemonId);
-    }
-    return fetch(`${process.env.REACT_APP_API}/cards?${query.toString()}`)
+export function getCard(page:number,filter:URLSearchParams= new URLSearchParams()) {
+    filter.set("page", String(page));
+    return fetch(`${process.env.REACT_APP_API}/cards?${filter.toString()}`)
     .then(resp => resp.json());
 }
 

@@ -2,11 +2,13 @@ import * as React from 'react';
 import {SetsModel, ListModel} from './ModelPokemon';
 import {Card} from 'react-bootstrap';
 import {getCard, getSetsOfPokemon} from './conector';
+import Pagination from 'react-js-pagination';
 
 
 type PokemonSetS= {
     sets: Array<SetsModel>,
-    cards: Array<ListModel>
+    cards: Array<ListModel>,
+    activePage: number
 }
 
 export class PokemonSets extends React.Component<any,PokemonSetS> {
@@ -14,10 +16,12 @@ export class PokemonSets extends React.Component<any,PokemonSetS> {
         super(props);
         this.state= {
             sets: [],
-            cards: []
+            cards: [],
+            activePage: 1
         }
         this.getSets = this.getSets.bind(this);
-        this.getCardForSets = this.getCardForSets.bind(this)
+        this.getCardForSets = this.getCardForSets.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     public getSets(){
@@ -28,13 +32,19 @@ export class PokemonSets extends React.Component<any,PokemonSetS> {
         })
     }
 
-    public getCardForSets(){
-        getCard().then(resp => {
-            this.setState({
-                cards: resp.cards       
-            })
-        })
+    public getCardForSets(pageNumber:number){
+        // getCard(pageNumber).then(resp => {
+        //     this.setState({
+        //         cards: resp.cards       
+        //     })
+        // })
     }
+
+    public handlePageChange(pageNumber:number) {
+        this.setState({activePage: pageNumber});
+        this.getCardForSets(pageNumber)
+      }
+
 
     componentDidMount(){
         this.getSets()
@@ -47,7 +57,7 @@ export class PokemonSets extends React.Component<any,PokemonSetS> {
                 <div className="pokemonSets">
                     {this.state.sets.map((sets:SetsModel, key)=> {
                         return <div className="pokemonSets--cardBox" key={sets.name}>
-                            <div className="pokemonSets--card"  onClick={this.getCardForSets} >
+                            <div className="pokemonSets--card"  onClick={()=>this.getCardForSets(this.state.activePage)} >
                                 <Card.Body>
                                     <Card.Img className="pokemonSets--logoSets" variant="top" src={`${sets.logoUrl}`} />                               
                                     <Card.Subtitle className="mb-2 text-muted">{sets.name}</Card.Subtitle>
@@ -57,7 +67,13 @@ export class PokemonSets extends React.Component<any,PokemonSetS> {
                                 </Card.Body>
                             </div>
                         </div>
-                    })}   
+                    })}
+                     <Pagination
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={20}
+                        totalItemsCount={9320}
+                        onChange={this.handlePageChange}
+                    />   
                 </div>
             </div>
         )

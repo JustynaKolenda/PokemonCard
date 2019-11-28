@@ -1,10 +1,12 @@
  import * as React from 'react';
- import {getFavouritCards} from './conector';
+ import {getCard} from './conector';
  import {Cart} from './ModelPokemon';
+ import Pagination from 'react-js-pagination';
 
  type ICartS = {
      carts: Array<Cart>,
-     favouriteItems: boolean
+     favouriteItems: boolean;
+     activePage: number
  }
 
 export class FavouritePokemon extends React.Component <any,ICartS> {
@@ -12,26 +14,33 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
         super(props);
         this.state= {
             carts: [],
-            favouriteItems: false
+            favouriteItems: false,
+            activePage: 1
         }
         this.showCartById = this.showCartById.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this)
     }
 
-    public showCartById(){
-        const pokemonItemcart = localStorage.getItem('cartItems');
-        if(pokemonItemcart != null){
-            let favouriteItemsId = JSON.parse(pokemonItemcart);
-            let stringArray = favouriteItemsId.join('|');
-            getFavouritCards(stringArray).then(resp => {
-                this.setState({
-                    carts: resp.cards
-                })
-            })
-        }
+    public showCartById(pageNumber:number){
+        // const pokemonItemcart = localStorage.getItem('cartItems');
+        // if(pokemonItemcart != null){
+        //     let favouriteItemsId = JSON.parse(pokemonItemcart);
+        //     let stringArray = favouriteItemsId.join('|');
+        //     getCard(pageNumber,stringArray).then(resp => {
+        //         this.setState({
+        //             carts: resp.cards
+        //         })
+        //     })
+        // }
     }
+
+    public handlePageChange(pageNumber:number) {
+        this.setState({activePage: pageNumber});
+        this.showCartById(pageNumber)
+      }
 
     componentDidMount(){
-        this.showCartById();
+        this.showCartById(this.state.activePage);
         let getStorage = localStorage.getItem('cartItems');
         if(getStorage != null){
             this.setState({
@@ -52,6 +61,12 @@ export class FavouritePokemon extends React.Component <any,ICartS> {
                                         <img className="pokemonCardFavourit--box" src={`${cart.imageUrl}`} alt=""/>
                                     </div>
                             })}
+                            <Pagination
+                                activePage={this.state.activePage}
+                                itemsCountPerPage={20}
+                                totalItemsCount={9320}
+                                onChange={this.handlePageChange}
+                            />
                         </div>
                      : "You don't have favourite carts"
                     }
