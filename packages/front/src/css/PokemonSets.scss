@@ -1,0 +1,36 @@
+.pokemonSets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1400px;
+    align-items: center;
+    text-align: center;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+    
+    &--card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        width: 200px;
+    }
+
+    &--cardBox {
+       min-height: 320px;
+       max-height: 320px;
+       display: flex;
+       align-items: baseline;
+       border: 1px solid rgba(0,0,0,.125);
+       border-radius: .25rem;
+       margin: 10px;
+    }
+
+    &--logoSets {
+        padding-bottom: 25px;
+    }
+}
